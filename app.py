@@ -3,8 +3,9 @@ import plotly
 import pandas as pd
 import numpy as np
 from collections import Counter
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
 import operator
-from tokenizer import tokenize
 from pprint import pprint
 import re
 from flask import Flask
@@ -13,7 +14,21 @@ from plotly.graph_objs import Bar
 import joblib
 from sqlalchemy import create_engine
 
+
 app = Flask(__name__)
+
+
+def tokenize(text):
+    tokens = word_tokenize(text)
+    lemmatizer = WordNetLemmatizer()
+
+    clean_tokens = []
+    for tok in tokens:
+        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
+        clean_tokens.append(clean_tok)
+
+    return clean_tokens
+
 
 # load data
 engine = create_engine('sqlite:///DisasterResponse.db')
@@ -21,6 +36,7 @@ df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
 model = joblib.load("classifier.pkl")
+
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
