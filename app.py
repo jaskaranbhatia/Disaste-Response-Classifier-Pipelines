@@ -18,7 +18,7 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 
-def tokenize(text):
+def tokenize_text_p(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -53,7 +53,7 @@ def index():
                                                           # words words with\
                                                           # repetition
     for text in df['message'].values:
-        tokenized_ = tokenize(text)
+        tokenized_ = tokenize_text_p(text)
         words_with_repetition.extend(tokenized_)
 
     word_count_dict = Counter(words_with_repetition)      # dictionary\
