@@ -30,14 +30,6 @@ def tokenize_text_p(text):
     return clean_tokens
 
 
-# load data
-engine = create_engine('sqlite:///DisasterResponse.db')
-df = pd.read_sql_table('DisasterResponse', engine)
-
-# load model
-model = joblib.load("classifier.pkl")
-
-
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
@@ -168,4 +160,13 @@ def main():
 
 
 if __name__ == '__main__':
+    from tokenizer import tokenize
+
+    # load data
+    engine = create_engine('sqlite:///DisasterResponse.db')
+    df = pd.read_sql_table('DisasterResponse', engine)
+
+    # load model
+    model = joblib.load("classifier.pkl")
+    
     main()
