@@ -18,12 +18,8 @@ from tokenizer import tokenize
 
 app = Flask(__name__)
 
-# load data
-engine = create_engine('sqlite:///DisasterResponse.db')
-df = pd.read_sql_table('DisasterResponse', engine)
-
-# load model
-model = joblib.load("classifier.pkl")
+global df
+global model
 
 
 def tokenize_text_p(text):
@@ -169,5 +165,12 @@ def main():
 
 if __name__ == '__main__':
     from tokenizer import tokenize
+    
+    # load data
+    engine = create_engine('sqlite:///DisasterResponse.db')
+    df = pd.read_sql_table('DisasterResponse', engine)
+
+    # load model
+    model = joblib.load("classifier.pkl")
     
     main()
