@@ -18,8 +18,7 @@ from tokenizer import tokenize
 
 app = Flask(__name__)
 
-global df
-global model
+model = None
 
 # load data
 engine = create_engine('sqlite:///DisasterResponse.db')
@@ -170,7 +169,7 @@ def main():
 if __name__ == '__main__':
     from tokenizer import tokenize
     
-    # load model
+    # load model'
     model = joblib.load("classifier.pkl")
     
     main()
