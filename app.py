@@ -18,14 +18,21 @@ from tokenizer import tokenize
 
 app = Flask(__name__)
 
-model = None
-
 # load data
 engine = create_engine('sqlite:///DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
+model = None
 
-def tokenize(text):
+try:
+    # load model'
+    model = joblib.load("classifier.pkl")
+    print("Loading model successful")
+except:
+    print("Error Loading model!")
+
+
+def tokenize_p(text):
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -52,7 +59,7 @@ def index():
                                                           # words words with\
                                                           # repetition
     for text in df['message'].values:
-        tokenized_ = tokenize(text)
+        tokenized_ = tokenize_p(text)
         words_with_repetition.extend(tokenized_)
 
     word_count_dict = Counter(words_with_repetition)      # dictionary\
@@ -167,9 +174,4 @@ def main():
 
 
 if __name__ == '__main__':
-    from tokenizer import tokenize
-    
-    # load model'
-    model = joblib.load("classifier.pkl")
-    
     main()
