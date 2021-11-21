@@ -22,10 +22,9 @@ app = Flask(__name__)
 engine = create_engine('sqlite:///DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
-model = None
-
 try:
     # load model'
+    from tokenizer import tokenize
     model = joblib.load("classifier.pkl")
     print("Loading model successful")
 except:
@@ -170,6 +169,8 @@ def go():
 
 
 def main():
+    from tokenizer import tokenize
+    
     app.run()
 
 
