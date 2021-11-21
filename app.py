@@ -37,9 +37,6 @@ def tokenize(text):
 
     return clean_tokens
 
-# load model
-model = joblib.load("classifier.pkl")
-
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
@@ -172,5 +169,8 @@ def main():
 
 if __name__ == '__main__':
     from tokenizer import tokenize
+    
+    # load model
+    model = joblib.load("classifier.pkl")
     
     main()
